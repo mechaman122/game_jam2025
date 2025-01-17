@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://clj0uk6so8l8t"]
+
+[ext_resource type="Script" path="res://bubbles/bubble.gd" id="1_0er1c"]
+[ext_resource type="Texture2D" uid="uid://cibe2i30pclfk" path="res://icon.svg" id="1_b86yq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tyyqh"]
+size = Vector2(12, 12)
+
+[node name="Bubble" type="CharacterBody2D"]
+script = ExtResource("1_0er1c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_b86yq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tyyqh")
