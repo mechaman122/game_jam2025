@@ -4,7 +4,12 @@ class_name Player
 var max_speed = 180
 var accel = 40
 var friction = 400
-var health = 25
+var health = 25:
+	set(value): 
+		health = value
+		if health >= 25:
+			health = 25
+		health_bar.value = health
 var player_alive = true
 var health_bar
 
@@ -98,8 +103,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		animation_player.play("hurt")
 		camera.apply_shake()
 		health = health - 5
-		#print(health)
-		update_health()
 		
 		is_immune = true
 		immune_timer.start()
@@ -108,15 +111,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			if Global.high_score <= Global.current_score:
 				Global.high_score = Global.current_score
 			die()
-
-
-func update_health():
-	health_bar.value = health
-	if health >= 100:
-		health_bar.visible = false
-	else:
-		health_bar.visible = true
-
 
 func _on_immune_timer_timeout() -> void:
 	is_immune = false

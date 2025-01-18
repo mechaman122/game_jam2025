@@ -35,6 +35,10 @@ func _ready() -> void:
 			speed = 0.7
 		3:
 			health = 10
+			
+	health = int(health * pow(1.13, Global.level))
+	speed = speed * min(pow(1.03, Global.level), 1.6)
+	
 	health_bar.max_value = health
 	health_bar.value = health
 
@@ -59,7 +63,7 @@ func take_damage():
 		animation_player.play("hurt")
 	else:
 		animation_player.play("hurt")
-	health -= 2
+	health -= int(2 * pow(1.09, Global.level))
 	
 	if health <= 0:
 		die()

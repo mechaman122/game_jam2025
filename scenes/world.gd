@@ -27,3 +27,8 @@ func _on_spawn_timer_timeout() -> void:
 
 func _on_bg_timer_timeout() -> void:
 	SoundManager.fade_into_bgm("bg_in_game", "bg_in_game", 4)
+
+
+func _on_upgrade_timer_timeout() -> void:
+	Global.level += 1
+	player.health += 1
