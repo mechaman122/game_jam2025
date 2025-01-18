@@ -32,4 +32,7 @@ shape = SubResource("RectangleShape2D_5tt7y")
 [node name="GunPosition" type="Marker2D" parent="."]
 position = Vector2(21, 0)
 
+[node name="FireDelayTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

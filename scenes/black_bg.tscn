@@ -6,20 +6,20 @@
 size = Vector2(627, 415)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_m3ung"]
-polygon = PackedVector2Array(-312, -206, -312, 208, 312, 208, 312, -208)
+polygon = PackedVector2Array(-312, -206, -312, -1.78046, -312, 208, 312, 208, 312, -208)
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(-0.5, -0.5)
-scale = Vector2(0.0271566, 0.0359712)
+position = Vector2(-2.5332e-07, 3.27826e-07)
+scale = Vector2(0.0255591, 0.0383693)
 texture = ExtResource("1_ecrr6")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
-position = Vector2(-0.5, 0.5)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_olpsk")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite2D"]

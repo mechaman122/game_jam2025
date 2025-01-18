@@ -7,8 +7,10 @@ var input = Vector2.ZERO
 
 var bullet_speed = 200
 var bullet = preload("res://bubbles/bubble.tscn")
+@export var fireDelay: float = 0.3
 
 @onready var gun_pos: Marker2D = $GunPosition
+@onready var fireDelayTimer := $FireDelayTimer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +20,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	player_movement(delta)
 	look_at(get_global_mouse_position())
-	if Input.is_action_pressed("move_fire"):
+	if Input.is_action_pressed("move_fire") and fireDelayTimer.is_stopped():
+		fireDelayTimer.start(fireDelay)
 		fire()
 	
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://csyday0xracda"
+path="res://.godot/imported/complete.ogg-d170be08882719ea6f302f97108abefc.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Assets/Packs/Meta data assets files/sounds/fx/complete.ogg"
+dest_files=["res://.godot/imported/complete.ogg-d170be08882719ea6f302f97108abefc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
