@@ -4,11 +4,15 @@ class_name Player
 var max_speed = 180
 var accel = 40
 var friction = 400
+var health = 100
+var player_alive = true
+var health_bar
 
 var input = Vector2.ZERO
 
 var bullet_speed = 200
 var bullet = preload("res://bubbles/bubble.tscn")
+
 @export var fireDelay: float = 0.3
 
 @onready var fireDelayTimer = $FireDelayTimer
@@ -18,6 +22,8 @@ var bullet = preload("res://bubbles/bubble.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	particles.emitting = false
+	health_bar = $HealthBar	
+	health_bar.value = health
 
 
 func _physics_process(delta: float) -> void:
@@ -71,4 +77,31 @@ func die():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Enemy:
-		die()
+		health = health - 5
+		#print(health)
+		update_health()
+		if health <= 0:
+			if Global.high_score >= Global.current_score:
+				Global.high_score = Global.current_score
+			print(Global.high_score)
+			print(Global.current_score)
+			#print(Global.previous_score)
+			#if Global.current_score != Global.previous_score:
+				#Global.previous_score = Global.current_score
+			die()
+
+
+func update_health():
+	health_bar.value = health
+	if health >= 100:
+		health_bar.visible = false
+	else:
+		health_bar.visible = true
+	
+func _on_timer_timeout():
+	if health < 100:
+		health = health + 5
+		if health > 100:
+			health = 100
+	if health <= 0:
+		health = 0

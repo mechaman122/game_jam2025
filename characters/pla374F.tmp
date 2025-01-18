@@ -25,6 +25,7 @@ scale = Vector2(0.8, 0.8)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_772te")
+fireDelay = null
 
 [node name="Weapon" type="Node2D" parent="."]
 
@@ -75,11 +76,13 @@ modulate = Color(1, 0, 0, 1)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -36.0
+offset_left = -25.0
 offset_top = 10.0
-offset_right = 36.0
-offset_bottom = 15.0
+offset_right = 27.0
+offset_bottom = 20.0
 grow_horizontal = 2
+step = 1.0
+rounded = true
 show_percentage = false
 
 [node name="regin_timer" type="Timer" parent="."]
