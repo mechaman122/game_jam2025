@@ -1,27 +1,27 @@
-[gd_scene load_steps=17 format=3 uid="uid://w7ig28k28j7a"]
+[gd_scene load_steps=17 format=3 uid="uid://nyf2fdmu7ut6"]
 
-[ext_resource type="Script" path="res://characters/fish/fish.gd" id="1_a1obm"]
-[ext_resource type="Texture2D" uid="uid://c3a53w5khinka" path="res://assets/fish/fish.png" id="2_sasxf"]
-[ext_resource type="Shader" path="res://scripts/dissolve.gdshader" id="2_u0uth"]
-[ext_resource type="Texture2D" uid="uid://clt252gv1vtut" path="res://assets/bubbles/bubble_3.png" id="2_wxu7e"]
+[ext_resource type="Script" path="res://characters/squid/squid.gd" id="2_fx6ai"]
+[ext_resource type="Texture2D" uid="uid://gruc0g0q3n0c" path="res://assets/squid/squid.png" id="2_h7ky8"]
+[ext_resource type="Shader" path="res://scripts/dissolve.gdshader" id="2_i4v67"]
+[ext_resource type="Texture2D" uid="uid://clt252gv1vtut" path="res://assets/bubbles/bubble_3.png" id="3_2iphp"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_um03u"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_77xi0"]
 noise_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t778g"]
-noise = SubResource("FastNoiseLite_um03u")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pk7i2"]
+noise = SubResource("FastNoiseLite_77xi0")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex1rj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gr6oa"]
 resource_local_to_scene = true
-shader = ExtResource("2_u0uth")
+shader = ExtResource("2_i4v67")
 shader_parameter/dissolve_value = 1.0
-shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_t778g")
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_pk7i2")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rx2u1"]
-size = Vector2(20, 12)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4b753"]
+size = Vector2(48.5, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_raipm"]
-size = Vector2(24, 16)
+size = Vector2(53, 28)
 
 [sub_resource type="Animation" id="Animation_u1cw8"]
 length = 0.001
@@ -91,7 +91,7 @@ tracks/0/keys = {
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_0aq1a"]
+[sub_resource type="Animation" id="Animation_sk0v2"]
 resource_name = "die"
 length = 0.6
 step = 0.05
@@ -149,7 +149,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jflc8"]
 _data = {
 "RESET": SubResource("Animation_u1cw8"),
-"die": SubResource("Animation_0aq1a"),
+"die": SubResource("Animation_sk0v2"),
 "hurt": SubResource("Animation_1s7qe")
 }
 
@@ -167,19 +167,19 @@ initial_velocity_max = 30.0
 gravity = Vector3(0, -2, 0)
 scale_curve = SubResource("CurveTexture_vq8mn")
 
-[node name="Fish" type="CharacterBody2D"]
+[node name="Squid" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 6
-script = ExtResource("1_a1obm")
+script = ExtResource("2_fx6ai")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_ex1rj")
+material = SubResource("ShaderMaterial_gr6oa")
 scale = Vector2(2, 2)
-texture = ExtResource("2_sasxf")
+texture = ExtResource("2_h7ky8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_rx2u1")
+shape = SubResource("RectangleShape2D_4b753")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
@@ -187,6 +187,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_raipm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -200,7 +201,7 @@ show_behind_parent = true
 position = Vector2(-15, 0)
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_8eq7u")
-texture = ExtResource("2_wxu7e")
+texture = ExtResource("3_2iphp")
 lifetime = 4.0
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -208,10 +209,10 @@ modulate = Color(1, 0, 0, 1)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -12.0
-offset_top = -14.0
-offset_right = 10.0
-offset_bottom = -9.0
+offset_left = -10.0
+offset_top = -22.0
+offset_right = 12.0
+offset_bottom = -17.0
 grow_horizontal = 2
 max_value = 20.0
 show_percentage = false

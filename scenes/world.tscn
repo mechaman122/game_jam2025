@@ -235,8 +235,13 @@ autostart = true
 wait_time = 20.0
 autostart = true
 
+[node name="BossTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/ResumeButton" to="PauseScreen" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/MainMenuButton" to="PauseScreen" method="_on_main_menu_button_pressed"]
 [connection signal="timeout" from="BgTimer" to="." method="_on_bg_timer_timeout"]
 [connection signal="timeout" from="UpgradeTimer" to="." method="_on_upgrade_timer_timeout"]
+[connection signal="timeout" from="BossTimer" to="." method="_on_boss_timer_timeout"]

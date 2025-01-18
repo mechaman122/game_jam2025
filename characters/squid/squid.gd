@@ -1,15 +1,9 @@
 extends CharacterBody2D
-class_name Enemy
+class_name Boss
 
-var health: int = 10
+var health: int = 25
 var health_bar
-var speed = 0.6
-var rng = RandomNumberGenerator.new()
-const image = [preload("res://assets/fish/fish.png"), preload("res://assets/fish/fish2.png"),
-			preload("res://assets/fish/fish3.png"), preload("res://assets/fish/fish4.png"),
-			preload("res://assets/fish/fish5.png")]
-var rand: int
-var rand1: int
+var speed = 0.4
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -17,25 +11,8 @@ var rand1: int
 
 func _ready() -> void:
 	health_bar = $HealthBar
-	rng.randomize()
-	rand = rng.randi_range(0, 3)
-	rand1 = rng.randi_range(0, 4)
-	apply_scale(Vector2(float(rand) / 2 + 0.5, float(rand) / 2 + 0.5))
-	sprite.texture = image[rand1]
+	apply_scale(Vector2(2, 2))
 	$GPUParticles2D.emitting = true
-	
-	match rand:
-		0:
-			health = 4
-			speed = 1
-		1: 
-			health = 6
-			speed = 0.8
-		2:
-			health = 8
-			speed = 0.7
-		3:
-			health = 10
 			
 	health = int(health * pow(1.13, Global.level))
 	speed = speed * min(pow(1.03, Global.level), 1.6)
@@ -70,5 +47,5 @@ func take_damage():
 		die()
 
 func die():
-	Global.current_score += (rand * Global.level)
+	Global.current_score += 100 * Global.level
 	animation_player.play("die")
