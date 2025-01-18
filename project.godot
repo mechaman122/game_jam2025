@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*res://global.gd"
 SceneTransitor="*res://autoloads/scene_transitor.tscn"
+SaverLoader="*res://autoloads/saver_loader.gd"
 
 [display]
 

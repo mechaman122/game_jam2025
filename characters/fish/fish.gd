@@ -19,7 +19,7 @@ func _ready() -> void:
 	rng.randomize()
 	rand = rng.randi_range(0, 4)
 	#print(rand)
-	apply_scale(Vector2(rand / 2 + 0.5,rand / 2 + 0.5))
+	apply_scale(Vector2(float(rand) / 2 + 0.5, float(rand) / 2 + 0.5))
 	sprite.texture = image[rand]
 	$GPUParticles2D.emitting = true
 	

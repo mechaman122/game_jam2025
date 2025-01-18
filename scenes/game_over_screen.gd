@@ -11,9 +11,11 @@ func _ready() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	SceneTransitor.start_transition_to("res://scenes/main_menu.tscn")
+	SaverLoader.save_score()
 	Global.current_score = 0
 	
 
 func _on_restart_button_pressed() -> void:
 	SceneTransitor.start_transition_to("res://scenes/world.tscn")
+	SaverLoader.save_score()
 	Global.current_score = 0	

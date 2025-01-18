@@ -9,6 +9,9 @@ func _ready() -> void:
 	$FishSpawner.emitting = true
 	$GPUParticles2D.emitting = true
 	%Title.text = "[center][tornado radius=10 freq=4]" + text + "[/tornado][/center]"
+	
+	SaverLoader.load_score()
+	%Score.text = "HIGHSCORE: " + str(Global.high_score)
 
 func _on_start_button_pressed() -> void:
 	SceneTransitor.start_transition_to("res://scenes/world.tscn")

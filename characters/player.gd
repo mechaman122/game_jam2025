@@ -4,7 +4,7 @@ class_name Player
 var max_speed = 180
 var accel = 40
 var friction = 400
-var health = 20
+var health = 25
 var player_alive = true
 var health_bar
 
@@ -12,6 +12,8 @@ var input = Vector2.ZERO
 
 var bullet_speed = 200
 var bullet = preload("res://bubbles/bubble.tscn")
+var gun
+var camera
 
 @export var fireDelay: float = 0.2
 
@@ -22,10 +24,17 @@ var bullet = preload("res://bubbles/bubble.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	randomize()
+	var rand = randi_range(16, 61)
+	gun = load("res://assets/weapons/1px/" + str(rand) + ".png")
+	$Weapon/Sprite2D.texture = gun
+	
 	particles.emitting = false
 	health_bar = $HealthBar	
+	health_bar.max_value = health
 	health_bar.value = health
 
+	camera = $"../Camera2D"
 
 func _physics_process(delta: float) -> void:
 	player_movement(delta)
@@ -63,6 +72,7 @@ func fire():
 	bullet_instance.global_position = %GunPosition.global_position
 	bullet_instance.global_rotation = weapon.global_rotation
 	get_tree().get_root().call_deferred("add_child", bullet_instance)
+	animation_player.play("recoil")
 
 
 func flip_weapon():
@@ -79,15 +89,13 @@ func die():
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Enemy:
 		animation_player.play("hurt")
+		camera.apply_shake()
 		health = health - 5
 		#print(health)
 		update_health()
-		if health <= 0:
+		if health < 0:
 			if Global.high_score <= Global.current_score:
 				Global.high_score = Global.current_score
-			#print(Global.previous_score)
-			#if Global.current_score != Global.previous_score:
-				#Global.previous_score = Global.current_score
 			die()
 
 
