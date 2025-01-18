@@ -14,8 +14,8 @@ spread = 20.0
 initial_velocity_min = 100.0
 initial_velocity_max = 120.0
 gravity = Vector3(25, 0, 0)
-scale_min = 2.5
-scale_max = 4.0
+scale_min = 3.0
+scale_max = 5.5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1csb5"]
 
@@ -87,8 +87,8 @@ grow_vertical = 2
 texture = ExtResource("2_a2w6l")
 
 [node name="Reef1" type="Sprite2D" parent="."]
-position = Vector2(286, 372)
-scale = Vector2(2.5, 2.5)
+position = Vector2(294, 384)
+scale = Vector2(2.1, 2.1)
 texture = ExtResource("5_7gltl")
 
 [node name="FishSpawner" type="GPUParticles2D" parent="."]
@@ -137,6 +137,7 @@ grow_vertical = 2
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
 theme_override_colors/font_hover_color = Color(0.246609, 0.468349, 1, 1)
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1csb5")
@@ -155,6 +156,7 @@ text = "Start"
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
 theme_override_colors/font_hover_color = Color(0.247059, 0.466667, 0.882353, 1)
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1csb5")

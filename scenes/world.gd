@@ -12,6 +12,7 @@ var length
 func _ready() -> void:
 	particles.emitting = true
 	length = enemy_spawn_area.curve.get_baked_length()
+	SoundManager.play_bgm("bg_in_game")
 
 
 func _on_spawn_timer_timeout() -> void:
@@ -22,3 +23,7 @@ func _on_spawn_timer_timeout() -> void:
 		var enemy = ENEMY.instantiate()
 		enemy.global_position = rand_spawn_pos
 		add_child(enemy)
+
+
+func _on_bg_timer_timeout() -> void:
+	SoundManager.fade_into_bgm("bg_in_game", "bg_in_game", 4)

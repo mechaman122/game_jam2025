@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
+		SoundManager.play_sfx("sfx_hit")
 		body.take_damage()
 	queue_free()
 

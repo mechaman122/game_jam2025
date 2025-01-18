@@ -97,6 +97,7 @@ grow_vertical = 2
 [node name="MainMenuButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
 theme_override_colors/font_hover_color = Color(0.246609, 0.468349, 1, 1)
 theme_override_font_sizes/font_size = 56
 theme_override_styles/focus = SubResource("StyleBoxEmpty_eaq40")
@@ -115,6 +116,7 @@ text = "Main Menu"
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
 theme_override_colors/font_hover_color = Color(0.246609, 0.468349, 1, 1)
 theme_override_font_sizes/font_size = 56
 theme_override_styles/focus = SubResource("StyleBoxEmpty_eaq40")

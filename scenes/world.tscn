@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://iquvivb7d6cn"]
+[gd_scene load_steps=28 format=4 uid="uid://iquvivb7d6cn"]
 
 [ext_resource type="PackedScene" uid="uid://df54fyq68jm75" path="res://characters/player.tscn" id="1_gvjnu"]
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_jx03m"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b1p7cgajwasb5" path="res://scenes/wall.tscn" id="6_3l2g7"]
 [ext_resource type="Script" path="res://scripts/time_elapsed.gd" id="7_3d8s5"]
 [ext_resource type="PackedScene" uid="uid://cuo35nphhw35a" path="res://scenes/canvas_layer.tscn" id="7_aykbn"]
+[ext_resource type="Script" path="res://scenes/pause_screen.gd" id="9_wr1yd"]
 
 [sub_resource type="Curve" id="Curve_yaio2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.503957), 0.0, 0.0, 0, 0]
@@ -43,6 +44,28 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -265, -182, 0, 0, 0, 0, 955, -182, 0, 0, 0, 0, 960, 371, 0, 0, 0, 0, -255, 365, 0, 0, 0, 0, -256, -150)
 }
 point_count = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63h7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8oy8b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eam5y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qi3wk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1c7mw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6tlo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vv0k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mq66s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb5ey"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ea3sv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cfogn"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_jx03m")
@@ -126,4 +149,89 @@ text = "00"
 [node name="Path2D" type="Path2D" parent="EnemySpawnArea"]
 curve = SubResource("Curve2D_oo402")
 
+[node name="PauseScreen" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("9_wr1yd")
+
+[node name="Panel" type="Panel" parent="PauseScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -74.0
+offset_right = 150.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseScreen/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.466667, 1, 1)
+theme_override_font_sizes/font_size = 56
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63h7q")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8oy8b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eam5y")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_qi3wk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1c7mw")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_a6tlo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5vv0k")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mq66s")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jb5ey")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ea3sv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cfogn")
+text = "RESUME"
+
+[node name="MainMenuButton" type="Button" parent="PauseScreen/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
+theme_override_colors/font_hover_color = Color(0.247059, 0.466667, 1, 1)
+theme_override_font_sizes/font_size = 56
+theme_override_styles/focus = SubResource("StyleBoxEmpty_63h7q")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8oy8b")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eam5y")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_qi3wk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_1c7mw")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_a6tlo")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5vv0k")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mq66s")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jb5ey")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ea3sv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cfogn")
+text = "Main Menu"
+
+[node name="Label" type="Label" parent="PauseScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -172.5
+offset_top = 80.0
+offset_right = 172.5
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "PAUSED"
+
+[node name="BgTimer" type="Timer" parent="."]
+wait_time = 70.0
+autostart = true
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/ResumeButton" to="PauseScreen" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/MainMenuButton" to="PauseScreen" method="_on_main_menu_button_pressed"]
+[connection signal="timeout" from="BgTimer" to="." method="_on_bg_timer_timeout"]

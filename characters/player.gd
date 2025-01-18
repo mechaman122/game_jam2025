@@ -21,6 +21,9 @@ var camera
 @onready var weapon: Node2D = $Weapon
 @onready var particles: GPUParticles2D = $GPUParticles2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var immune_timer: Timer = $ImmuneTimer
+
+var is_immune = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -68,11 +71,12 @@ func player_movement(delta):
 	
 	
 func fire():
+	SoundManager.play_sfx("sfx_fire", 0, -10)
+	animation_player.play("recoil")
 	var bullet_instance = bullet.instantiate() as Area2D
 	bullet_instance.global_position = %GunPosition.global_position
 	bullet_instance.global_rotation = weapon.global_rotation
 	get_tree().get_root().call_deferred("add_child", bullet_instance)
-	animation_player.play("recoil")
 
 
 func flip_weapon():
@@ -87,12 +91,19 @@ func die():
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	if is_immune:
+		return
 	if body is Enemy:
+		SoundManager.play_sfx("sfx_crash", 0, -15)
 		animation_player.play("hurt")
 		camera.apply_shake()
 		health = health - 5
 		#print(health)
 		update_health()
+		
+		is_immune = true
+		immune_timer.start()
+		
 		if health < 0:
 			if Global.high_score <= Global.current_score:
 				Global.high_score = Global.current_score
@@ -105,3 +116,7 @@ func update_health():
 		health_bar.visible = false
 	else:
 		health_bar.visible = true
+
+
+func _on_immune_timer_timeout() -> void:
+	is_immune = false

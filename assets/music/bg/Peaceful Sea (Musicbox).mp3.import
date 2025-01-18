@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ccnksyy2dpip1"
+path="res://.godot/imported/Peaceful Sea (Musicbox).mp3-c1a8a3d6276d9a0bacbc6427c1d8ce93.mp3str"
+
+[deps]
+
+source_file="res://assets/music/bg/Peaceful Sea (Musicbox).mp3"
+dest_files=["res://.godot/imported/Peaceful Sea (Musicbox).mp3-c1a8a3d6276d9a0bacbc6427c1d8ce93.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
