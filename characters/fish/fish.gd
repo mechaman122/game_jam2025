@@ -17,7 +17,7 @@ var rand: int
 func _ready() -> void:
 	health_bar = $HealthBar
 	rng.randomize()
-	rand = rng.randi_range(0, 4)
+	rand = rng.randi_range(0, 3)
 	#print(rand)
 	apply_scale(Vector2(float(rand) / 2 + 0.5, float(rand) / 2 + 0.5))
 	sprite.texture = image[rand]
@@ -65,5 +65,5 @@ func take_damage():
 		die()
 
 func die():
-	Global.current_score += 1
+	Global.current_score += (rand + 1)
 	queue_free()
