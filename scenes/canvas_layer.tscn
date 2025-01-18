@@ -5,7 +5,12 @@
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="CurrentScore" type="RichTextLabel" parent="."]
-offset_right = 134.0
-offset_bottom = 40.0
+offset_left = 52.0
+offset_top = 46.0
+offset_right = 352.0
+offset_bottom = 86.0
+theme_override_font_sizes/normal_font_size = 40
 text = "SCORE: "
+fit_content = true
+scroll_active = false
 script = ExtResource("2_bj8cf")

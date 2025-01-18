@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 func _on_spawn_timer_timeout() -> void:
 	for pos in enemy_spawn.get_children():
 		randomize()
-		if randf() < 0.4:
+		if randf() < 0.5:
 			var enemy = ENEMY.instantiate()
 			enemy.global_position = pos.global_position
 			add_child(enemy)

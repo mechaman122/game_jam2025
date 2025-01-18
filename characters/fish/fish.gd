@@ -1,8 +1,9 @@
 extends CharacterBody2D
 class_name Enemy
 
-var health: int = 5
+var health: int = 10
 var health_bar
+var speed = 0.6
 var rng = RandomNumberGenerator.new()
 const image = [preload("res://assets/fish/fish.png"), preload("res://assets/fish/fish2.png"),
 			preload("res://assets/fish/fish3.png"), preload("res://assets/fish/fish4.png"),
@@ -18,26 +19,29 @@ func _ready() -> void:
 	rng.randomize()
 	rand = rng.randi_range(0, 4)
 	#print(rand)
-	apply_scale(Vector2(rand + 0.75,rand + 0.75))
+	apply_scale(Vector2(rand / 2 + 0.5,rand / 2 + 0.5))
 	sprite.texture = image[rand]
 	$GPUParticles2D.emitting = true
 	
 	match rand:
 		0:
-			health = 5
+			health = 4
+			speed = 1
 		1: 
-			health = 10
+			health = 6
+			speed = 0.8
 		2:
-			health = 15
+			health = 8
+			speed = 0.7
 		3:
-			health = 20
+			health = 10
 	health_bar.max_value = health
 	health_bar.value = health
 
 
 func _physics_process(_delta: float) -> void:
 	var player: Player = get_parent().get_node("Player")
-	velocity = (player.position - position).normalized() * 0.6
+	velocity = (player.position - position).normalized() * speed
 	#position += (player.position - position) / 50
 	look_at(player.position)
 	if global_rotation_degrees > -90 && global_rotation_degrees < 90:
@@ -58,8 +62,8 @@ func take_damage():
 	health -= 2
 	
 	if health <= 0:
-		Global.current_score += 1
 		die()
 
 func die():
+	Global.current_score += 1
 	queue_free()
