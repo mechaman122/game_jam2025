@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://clj0uk6so8l8t"]
 
 [ext_resource type="Script" path="res://bubbles/bubble.gd" id="1_0er1c"]
-[ext_resource type="Texture2D" uid="uid://cibe2i30pclfk" path="res://icon.svg" id="1_b86yq"]
+[ext_resource type="Texture2D" uid="uid://di6xunn16uh42" path="res://assets/bubbles/bubble_1.png" id="2_7xnsb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tyyqh"]
-size = Vector2(12, 12)
+[sub_resource type="CircleShape2D" id="CircleShape2D_e4gcf"]
+radius = 8.0
 
 [node name="Bubble" type="Area2D"]
 collision_layer = 8
@@ -12,10 +12,17 @@ collision_mask = 4
 script = ExtResource("1_0er1c")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_b86yq")
+modulate = Color(1, 1, 0, 1)
+texture = ExtResource("2_7xnsb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_tyyqh")
+visible = false
+shape = SubResource("CircleShape2D_e4gcf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
