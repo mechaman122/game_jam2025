@@ -27,6 +27,7 @@ var camera
 @onready var particles: GPUParticles2D = $GPUParticles2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var immune_timer: Timer = $ImmuneTimer
+@onready var PowerupTimer: Timer = $PowerupTimer
 
 var is_immune = false
 
@@ -107,10 +108,13 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		is_immune = true
 		immune_timer.start()
 		
-		if health < 0:
+		if health <= 0:
 			if Global.high_score <= Global.current_score:
 				Global.high_score = Global.current_score
 			die()
+			
+	#if body is Powerup:
+		#print("Hi")
 
 func _on_immune_timer_timeout() -> void:
 	is_immune = false

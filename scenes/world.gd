@@ -5,9 +5,11 @@ extends Node2D
 @onready var particles = $Camera2D/GPUParticles2D
 
 @onready var enemy_spawn_area: Path2D = $EnemySpawnArea/Path2D
+@onready var powerup_spawn_area: Path2D = $PowerupSpawnArea/Path2D
 
 const ENEMY: PackedScene = preload("res://characters/fish/fish.tscn")
 const BOSS: PackedScene = preload("res://characters/squid/squid.tscn")
+const POWERUP: PackedScene = preload("res://scenes/powerup.tscn")
 var length
 
 func _ready() -> void:
@@ -20,6 +22,8 @@ func _on_spawn_timer_timeout() -> void:
 	for i in range(0, randi_range(2, 4)):
 		spawn_enemy(ENEMY)
 		
+	for i in range(1, randi_range(2, 6)):
+		spawn_powerup(POWERUP)
 
 func spawn_enemy(scene: PackedScene) -> void:
 	var rand = randf_range(0, length)
@@ -29,6 +33,13 @@ func spawn_enemy(scene: PackedScene) -> void:
 	enemy.global_position = rand_spawn_pos
 	add_child(enemy)
 	
+func spawn_powerup(scene: PackedScene) -> void:
+	var rand = randf_range(0, length)
+	var rand_spawn_pos =  powerup_spawn_area.curve.sample_baked(rand)
+	
+	var powerup = scene.instantiate()
+	powerup.global_position = powerup_spawn_area.curve.sample_baked(rand)
+	add_child(powerup)
 
 func _on_bg_timer_timeout() -> void:
 	SoundManager.fade_into_bgm("bg_in_game", "bg_in_game", 4)

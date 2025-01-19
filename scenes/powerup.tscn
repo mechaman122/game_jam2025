@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://7klmb0gcwuh2"]
+
+[ext_resource type="Script" path="res://scenes/powerup.gd" id="1_tg0lj"]
+[ext_resource type="Texture2D" uid="uid://di6xunn16uh42" path="res://assets/bubbles/bubble_1.png" id="2_7riaq"]
+[ext_resource type="Texture2D" uid="uid://c3a53w5khinka" path="res://assets/fish/fish.png" id="3_kgv4n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_178po"]
+size = Vector2(124, 124)
+
+[node name="Powerup" type="Area2D"]
+scale = Vector2(0.25, 0.25)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_tg0lj")
+velocity = Vector2(0, 50)
+sprite_size = 300
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.0117647, 0, 1)
+scale = Vector2(7.72, 7.72)
+texture = ExtResource("2_7riaq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+scale = Vector2(7.205, 7.205)
+texture = ExtResource("3_kgv4n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_178po")
+
+[node name="PowerupEffectTimer" type="Timer" parent="."]
+
+[node name="RichTextLabel" type="Label" parent="."]
+offset_left = -112.0
+offset_top = 64.0
+offset_right = 115.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 30
+text = "BULLET SPEED + 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="PowerupEffectTimer" to="." method="_on_powerup_effect_timer_timeout"]
+[connection signal="timeout" from="PowerupEffectTimer" to="." method="_on_timer_timeout"]

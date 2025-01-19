@@ -7,14 +7,14 @@ const image = [preload("res://assets/fish/fish2.png"), preload("res://assets/fis
 var bg_id: int = randi_range(0,2)
 
 func _ready() -> void:
-	print(bg_id)
+	#print(bg_id)
 	var text = %Title.text
 	$FishSpawner.emitting = true
 	$GPUParticles2D.emitting = true
 	%Title.text = "[center][tornado radius=10 freq=4]" + text + "[/tornado][/center]"
 	
 	SaverLoader.load_score()
-	%Score.text = "HIGHSCORE: " + str(Global.high_score)
+	%Score.text = "HIGH SCORE: " + str(Global.high_score)
 	
 	SoundManager.play_bgm("bg_" + str(bg_id))
 

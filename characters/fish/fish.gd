@@ -64,7 +64,7 @@ func take_damage():
 		animation_player.play("hurt")
 	else:
 		animation_player.play("hurt")
-	health -= int(2 * pow(1.09, Global.level))
+	health -= (int(2 * pow(1.09, Global.level)) + Global.damage)
 	
 	if health <= 0:
 		die()
