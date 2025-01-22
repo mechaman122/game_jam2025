@@ -1,28 +1,16 @@
-[gd_scene load_steps=28 format=4 uid="uid://iquvivb7d6cn"]
+[gd_scene load_steps=27 format=4 uid="uid://iquvivb7d6cn"]
 
 [ext_resource type="PackedScene" uid="uid://df54fyq68jm75" path="res://characters/player.tscn" id="1_gvjnu"]
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_jx03m"]
 [ext_resource type="Texture2D" uid="uid://cvynb0qqaiosr" path="res://assets/background.jpg" id="2_kpbib"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_i22n1"]
+[ext_resource type="Material" uid="uid://bnpyupjj3s1hi" path="res://particlefx/world_bubble.tres" id="5_icrdx"]
 [ext_resource type="Texture2D" uid="uid://di6xunn16uh42" path="res://assets/bubbles/bubble_1.png" id="5_v6pif"]
 [ext_resource type="PackedScene" uid="uid://b1p7cgajwasb5" path="res://scenes/wall.tscn" id="6_3l2g7"]
 [ext_resource type="Script" path="res://scripts/time_elapsed.gd" id="7_3d8s5"]
 [ext_resource type="PackedScene" uid="uid://cuo35nphhw35a" path="res://scenes/canvas_layer.tscn" id="7_aykbn"]
 [ext_resource type="Script" path="res://scenes/pause_screen.gd" id="9_wr1yd"]
-
-[sub_resource type="Curve" id="Curve_yaio2"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.503957), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_sfbii"]
-curve = SubResource("Curve_yaio2")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_am7il"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(600, 1, 1)
-gravity = Vector3(0, -15, 0)
-scale_curve = SubResource("CurveTexture_sfbii")
+[ext_resource type="Script" path="res://scripts/button.gd" id="11_pn5i2"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_tgq4c"]
 resource_name = "wall"
@@ -102,7 +90,7 @@ modulate = Color(1, 1, 1, 0.588235)
 position = Vector2(20, 243)
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_am7il")
+process_material = ExtResource("5_icrdx")
 texture = ExtResource("5_v6pif")
 lifetime = 10.0
 
@@ -113,12 +101,6 @@ tile_set = SubResource("TileSet_8mdwd")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3nhf3")
-
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 3.5
-autostart = true
-
-[node name="PowerupSpawnTimer" type="Timer" parent="."]
 
 [node name="Score" parent="." instance=ExtResource("7_aykbn")]
 
@@ -203,6 +185,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_jb5ey")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ea3sv")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_cfogn")
 text = "RESUME"
+script = ExtResource("11_pn5i2")
 
 [node name="MainMenuButton" type="Button" parent="PauseScreen/Panel/VBoxContainer"]
 layout_mode = 2
@@ -222,6 +205,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_jb5ey")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ea3sv")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_cfogn")
 text = "Main Menu"
+script = ExtResource("11_pn5i2")
 
 [node name="Label" type="Label" parent="PauseScreen/Panel"]
 layout_mode = 1
@@ -236,6 +220,14 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 120
 text = "PAUSED"
 
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.5
+autostart = true
+
+[node name="PowerupSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [node name="BgTimer" type="Timer" parent="."]
 wait_time = 70.0
 autostart = true
@@ -245,12 +237,13 @@ wait_time = 20.0
 autostart = true
 
 [node name="BossTimer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 30.0
 autostart = true
 
-[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/ResumeButton" to="PauseScreen" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseScreen/Panel/VBoxContainer/MainMenuButton" to="PauseScreen" method="_on_main_menu_button_pressed"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]
 [connection signal="timeout" from="BgTimer" to="." method="_on_bg_timer_timeout"]
 [connection signal="timeout" from="UpgradeTimer" to="." method="_on_upgrade_timer_timeout"]
 [connection signal="timeout" from="BossTimer" to="." method="_on_boss_timer_timeout"]

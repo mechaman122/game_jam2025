@@ -21,10 +21,12 @@ Global="*res://global.gd"
 SceneTransitor="*res://autoloads/scene_transitor.tscn"
 SaverLoader="*res://autoloads/saver_loader.gd"
 SoundManager="*res://addons/sound_manager/module/SoundManager.tscn"
+ParticleFx="*res://autoloads/particle_fx_singleton.tscn"
+ConfigFileHandler="*res://autoloads/config_file_handler.gd"
 
 [display]
 
-window/size/mode=3
+window/size/mode=2
 window/size/borderless=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"

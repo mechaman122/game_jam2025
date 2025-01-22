@@ -6,17 +6,26 @@ var accel = 40
 var friction = 400
 var health = 25:
 	set(value): 
-		health = value
-		if health >= 25:
-			health = 25
-		health_bar.value = health
-var player_alive = true
-var health_bar
+		health = min(value, 25)
+		health_bar.health = health
+		is_immune = true
+		immune_timer.start()
+		
+		if health <= 0:
+			if Global.high_score <= Global.current_score:
+				Global.high_score = Global.current_score
+			die()
+		
+@onready var health_bar: ProgressBar = $HealthBar
 
 var input = Vector2.ZERO
 
 var bullet_speed = 200
 var bullet = preload("res://bubbles/bubble.tscn")
+var bullet_count = 1
+var arc = 0
+var buff_count = 1
+
 var gun
 var camera
 
@@ -26,6 +35,7 @@ var camera
 @onready var weapon: Node2D = $Weapon
 @onready var particles: GPUParticles2D = $GPUParticles2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var effect_player: AnimationPlayer = $EffectPlayer
 @onready var immune_timer: Timer = $ImmuneTimer
 @onready var PowerupTimer: Timer = $PowerupTimer
 
@@ -39,9 +49,7 @@ func _ready() -> void:
 	$Weapon/Sprite2D.texture = gun
 	
 	particles.emitting = false
-	health_bar = $HealthBar	
-	health_bar.max_value = health
-	health_bar.value = health
+	health_bar.init_health(health)
 
 	camera = $"../Camera2D"
 
@@ -52,6 +60,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("move_fire") and fireDelayTimer.is_stopped():
 		fireDelayTimer.start(fireDelay)
 		fire()
+	#if Input.is_action_pressed("move_fire"):
+		#fire()
 
 
 func get_input():
@@ -78,11 +88,27 @@ func player_movement(delta):
 	
 func fire():
 	SoundManager.play_sfx("sfx_fire", 0, -10)
-	animation_player.play("recoil")
-	var bullet_instance = bullet.instantiate() as Area2D
-	bullet_instance.global_position = %GunPosition.global_position
-	bullet_instance.global_rotation = weapon.global_rotation
-	get_tree().get_root().call_deferred("add_child", bullet_instance)
+	if animation_player.current_animation == "recoil":
+		animation_player.stop()
+		animation_player.play("recoil")
+	else:
+		animation_player.play("recoil")
+		
+	for i in bullet_count:
+		var bullet_instance = bullet.instantiate() as Area2D
+		bullet_instance.global_position = %GunPosition.global_position
+		
+		if bullet_count == 1:
+			bullet_instance.global_rotation = weapon.global_rotation
+		else:
+			var arc_rad = deg_to_rad(arc)
+			var increment = arc_rad / (bullet_count - 1)
+			bullet_instance.global_rotation = (
+					weapon.global_rotation + 
+					increment * i -
+					arc_rad / 2
+			)
+		get_tree().get_root().call_deferred("add_child", bullet_instance)
 
 
 func flip_weapon():
@@ -99,22 +125,12 @@ func die():
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if is_immune:
 		return
-	if body is Enemy:
-		SoundManager.play_sfx("sfx_crash", 0, -15)
-		animation_player.play("hurt")
+	if body is Fish:
+		SoundManager.play_sfx("sfx_crash", 0, -20)
+		effect_player.play("hurt")
 		camera.apply_shake()
+		
 		health = health - 5
 		
-		is_immune = true
-		immune_timer.start()
-		
-		if health <= 0:
-			if Global.high_score <= Global.current_score:
-				Global.high_score = Global.current_score
-			die()
-			
-	#if body is Powerup:
-		#print("Hi")
-
 func _on_immune_timer_timeout() -> void:
 	is_immune = false

@@ -9,41 +9,48 @@ class_name Powerup
 
 var rand: int = 0
 
-const fish_image = [preload("res://assets/fish/fish.png"), preload("res://assets/fish/fish2.png"),
-			preload("res://assets/fish/fish3.png"), preload("res://assets/fish/fish4.png"),
-			preload("res://assets/fish/fish5.png")]
+@export var fish_img: Array[Texture2D] = []
+
 var rng = RandomNumberGenerator.new()
 
 func _ready():
+	$AnimationPlayer.play("pop_in")
 	rng.randomize()
 	rand = rng.randi_range(0, 4)
-	sprite.texture = fish_image[rand]
+	sprite.texture = fish_img[rand]
 	match rand:
 		0:
-			$RichTextLabel.text = "SPEED + 5"
+			$RichTextLabel.text = "SPEED +"
 		1:
-			$RichTextLabel.text = "HEALTH + 1"
+			$RichTextLabel.text = "HEALTH +"
 		2:
-			$RichTextLabel.text = "BULLET SPEED + 10"
+			$RichTextLabel.text = "BULLET COUNTS +"
 		3:
-			$RichTextLabel.text = "DAMAGE + 1"
+			$RichTextLabel.text = "DAMAGE + " + str(int(pow(1.25, Global.level)))
 		4:
-			$RichTextLabel.text = "ATK DELAY - 0.01"
+			$RichTextLabel.text = "ATK DELAY -"
+
 
 func _on_body_entered(body: CharacterBody2D):
 	if body is Player:
-		SoundManager.play_sfx("sfx_powerup")
+		SoundManager.play_sfx("sfx_powerup", 0, -20)
 		match rand:
 			0:
 				body.max_speed += 5
 			1:
 				body.health += 1
 			2:
-				body.bullet_speed += 10
+				body.buff_count -= 1
+				if body.buff_count <= 0:
+					body.bullet_count += 1
+					body.arc += 20
+					body.buff_count += (body.bullet_count + 1)
+					body.fireDelay -= 0.01
+					Global.damage *= 0.6
 			3:
-				Global.damage += 1
+				Global.damage += int(pow(1.52, Global.level))
 			4:
-				body.fireDelay -= 0.01
+				body.fireDelay = max(body.fireDelay - 0.005, 0.05)
 		visible = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

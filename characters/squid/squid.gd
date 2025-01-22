@@ -1,30 +1,20 @@
-extends CharacterBody2D
+extends Fish
 class_name Boss
-
-var health: int = 25
-var health_bar
-var speed = 0.4
-
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var sprite: Sprite2D = $Sprite2D
 
 
 func _ready() -> void:
-	health_bar = $HealthBar
 	apply_scale(Vector2(2, 2))
 	$GPUParticles2D.emitting = true
 			
-	health = int(health * pow(1.13, Global.level))
-	speed = speed * min(pow(1.03, Global.level), 1.6)
+	health = int(health * pow(1.6, Global.level))
+	speed = speed * min(pow(1.03, Global.level), 1.3)
 	
-	health_bar.max_value = health
-	health_bar.value = health
+	health_bar.init_health(health)
 
 
 func _physics_process(_delta: float) -> void:
 	var player: Player = get_parent().get_node("Player")
 	velocity = (player.position - position).normalized() * speed
-	#position += (player.position - position) / 50
 	look_at(player.position)
 	if global_rotation_degrees > -90 && global_rotation_degrees < 90:
 		sprite.flip_v = false
@@ -34,18 +24,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_collide(velocity)
 
 
-func take_damage():
-	health_bar.value = health
-	if animation_player.current_animation == "hurt":
-		animation_player.stop()
-		animation_player.play("hurt")
-	else:
-		animation_player.play("hurt")
-	health -= int(2 * pow(1.09, Global.level))
-	
-	if health <= 0:
-		die()
-
 func die():
-	Global.current_score += 100 * Global.level
+	Global.current_score += 120 * Global.level
 	animation_player.play("die")

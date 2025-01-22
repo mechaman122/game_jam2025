@@ -1,0 +1,176 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyr2nfmaogq61"]
+
+[ext_resource type="Script" path="res://scenes/main_menu_video.gd" id="1_vxrw5"]
+[ext_resource type="Script" path="res://scenes/main_menu_audio.gd" id="2_errte"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hxw1y"]
+
+[node name="Options" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 360)
+
+[node name="OptionsTabs" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hxw1y")
+current_tab = 0
+
+[node name="Video" type="TabBar" parent="OptionsTabs"]
+layout_mode = 2
+script = ExtResource("1_vxrw5")
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsTabs/Video"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -46.0
+offset_right = 117.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(117, 46)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsTabs/Video/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="FullScreen" type="Label" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Full Screen"
+
+[node name="Borderless" type="Label" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Borderless"
+
+[node name="Vsync" type="Label" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "V-Sync"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="OptionsTabs/Video/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="FullScreen" type="CheckBox" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Borderless" type="CheckBox" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Vsync" type="OptionButton" parent="OptionsTabs/Video/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 1
+item_count = 4
+popup/item_0/text = "Disabled"
+popup/item_1/text = "Enabled"
+popup/item_1/id = 1
+popup/item_2/text = "Adaptive"
+popup/item_2/id = 2
+popup/item_3/text = "Mailbox"
+popup/item_3/id = 3
+
+[node name="Audio" type="TabBar" parent="OptionsTabs"]
+visible = false
+layout_mode = 2
+script = ExtResource("2_errte")
+metadata/_tab_index = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsTabs/Audio"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -20.0
+offset_right = 150.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(150, 20)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="OptionsTabs/Audio/HBoxContainer"]
+layout_mode = 2
+
+[node name="Master" type="Label" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Master"
+
+[node name="Music" type="Label" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Music
+"
+
+[node name="Sound" type="Label" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Sound"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsTabs/Audio/HBoxContainer"]
+layout_mode = 2
+
+[node name="Master" type="HSlider" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Music" type="HSlider" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="Sound" type="HSlider" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="OptionsTabs/Audio/HBoxContainer"]
+layout_mode = 2
+
+[node name="Mute" type="CheckBox" parent="OptionsTabs/Audio/HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Mute"
+
+[connection signal="toggled" from="OptionsTabs/Video/HBoxContainer/VBoxContainer2/FullScreen" to="OptionsTabs/Video" method="_on_full_screen_toggled"]
+[connection signal="toggled" from="OptionsTabs/Video/HBoxContainer/VBoxContainer2/Borderless" to="OptionsTabs/Video" method="_on_borderless_toggled"]
+[connection signal="item_selected" from="OptionsTabs/Video/HBoxContainer/VBoxContainer2/Vsync" to="OptionsTabs/Video" method="_on_vsync_item_selected"]
+[connection signal="value_changed" from="OptionsTabs/Audio/HBoxContainer/VBoxContainer/Master" to="OptionsTabs/Audio" method="_on_master_value_changed"]
+[connection signal="value_changed" from="OptionsTabs/Audio/HBoxContainer/VBoxContainer/Music" to="OptionsTabs/Audio" method="_on_music_value_changed"]
+[connection signal="value_changed" from="OptionsTabs/Audio/HBoxContainer/VBoxContainer/Sound" to="OptionsTabs/Audio" method="_on_sound_value_changed"]
+[connection signal="toggled" from="OptionsTabs/Audio/HBoxContainer/VBoxContainer3/Mute" to="OptionsTabs/Audio" method="_on_check_box_toggled"]

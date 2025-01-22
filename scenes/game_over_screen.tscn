@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://4n7tmebeklsw"]
+[gd_scene load_steps=14 format=3 uid="uid://4n7tmebeklsw"]
 
 [ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_li5k5"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="2_6ialj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eaq40"]
 
@@ -112,6 +113,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_5q5c3")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_5jda3")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2orf6")
 text = "Main Menu"
+script = ExtResource("2_6ialj")
 
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -131,6 +133,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_5q5c3")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_5jda3")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2orf6")
 text = "Restart"
+script = ExtResource("2_6ialj")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 

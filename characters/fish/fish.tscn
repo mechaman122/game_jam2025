@@ -1,9 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://w7ig28k28j7a"]
+[gd_scene load_steps=20 format=3 uid="uid://w7ig28k28j7a"]
 
 [ext_resource type="Script" path="res://characters/fish/fish.gd" id="1_a1obm"]
 [ext_resource type="Texture2D" uid="uid://c3a53w5khinka" path="res://assets/fish/fish.png" id="2_sasxf"]
 [ext_resource type="Shader" path="res://scripts/dissolve.gdshader" id="2_u0uth"]
 [ext_resource type="Texture2D" uid="uid://clt252gv1vtut" path="res://assets/bubbles/bubble_3.png" id="2_wxu7e"]
+[ext_resource type="Texture2D" uid="uid://ytrhd8b1x3o5" path="res://assets/fish/fish5.png" id="3_lppm6"]
+[ext_resource type="Material" uid="uid://b2tjvrkmuhx6j" path="res://particlefx/fish_bubble.tres" id="4_6peu8"]
+[ext_resource type="Texture2D" uid="uid://chnysydxicklo" path="res://assets/fish/fish4.png" id="4_xw726"]
+[ext_resource type="Texture2D" uid="uid://bw0r8vx7eenwj" path="res://assets/fish/fish3.png" id="5_il6wf"]
+[ext_resource type="Texture2D" uid="uid://dgjjh7bgm5gmj" path="res://assets/fish/fish2.png" id="6_75bl2"]
+[ext_resource type="PackedScene" uid="uid://yrgog843vjbw" path="res://scenes/health_bar.tscn" id="10_bglii"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_um03u"]
 noise_type = 2
@@ -18,56 +24,44 @@ shader_parameter/dissolve_value = 1.0
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_b2sud")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rx2u1"]
-size = Vector2(20, 12)
+size = Vector2(16, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_raipm"]
-size = Vector2(24, 16)
+size = Vector2(20, 12)
 
 [sub_resource type="Animation" id="Animation_u1cw8"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/dissolve_value")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [1.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:material:shader_parameter/dissolve_value")
+tracks/1/path = NodePath("CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"update": 1,
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -133,18 +127,6 @@ tracks/3/keys = {
 resource_name = "hurt"
 length = 0.3
 step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jflc8"]
 _data = {
@@ -153,24 +135,11 @@ _data = {
 "hurt": SubResource("Animation_1s7qe")
 }
 
-[sub_resource type="Curve" id="Curve_gi3dw"]
-_data = [Vector2(0, 0.301865), 0.0, 0.0, 0, 0, Vector2(1, 0.21368), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_vq8mn"]
-curve = SubResource("Curve_gi3dw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8eq7u"]
-particle_flag_disable_z = true
-initial_velocity_min = -30.0
-initial_velocity_max = 30.0
-gravity = Vector3(0, -2, 0)
-scale_curve = SubResource("CurveTexture_vq8mn")
-
 [node name="Fish" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 6
 script = ExtResource("1_a1obm")
+fish_img = Array[Texture2D]([ExtResource("2_sasxf"), ExtResource("3_lppm6"), ExtResource("4_xw726"), ExtResource("5_il6wf"), ExtResource("6_75bl2")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ex1rj")
@@ -199,19 +168,12 @@ modulate = Color(1, 1, 1, 0.588235)
 show_behind_parent = true
 position = Vector2(-15, 0)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8eq7u")
+process_material = ExtResource("4_6peu8")
 texture = ExtResource("2_wxu7e")
 lifetime = 4.0
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-modulate = Color(1, 0, 0, 1)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -12.0
-offset_top = -14.0
-offset_right = 10.0
-offset_bottom = -9.0
-grow_horizontal = 2
-max_value = 20.0
-show_percentage = false
+[node name="HealthBar" parent="." instance=ExtResource("10_bglii")]
+offset_left = -11.0
+offset_top = -13.0
+offset_right = 11.0
+offset_bottom = -10.0

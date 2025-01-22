@@ -4,18 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://di6b8hsqqem85" path="res://assets/underwater_bg.jpeg" id="2_a2w6l"]
 [ext_resource type="Texture2D" uid="uid://dgjjh7bgm5gmj" path="res://assets/fish/fish2.png" id="3_0agft"]
 [ext_resource type="Texture2D" uid="uid://di6xunn16uh42" path="res://assets/bubbles/bubble_1.png" id="3_vnf8f"]
+[ext_resource type="Material" uid="uid://djcy0k6ne7kki" path="res://particlefx/main_menu_fish.tres" id="4_84sei"]
 [ext_resource type="Texture2D" uid="uid://x255fodon8ny" path="res://assets/reef.png" id="5_7gltl"]
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xvl8g"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(1, 400, 1)
-spread = 20.0
-initial_velocity_min = 100.0
-initial_velocity_max = 120.0
-gravity = Vector3(25, 0, 0)
-scale_min = 3.0
-scale_max = 5.5
+[ext_resource type="Material" uid="uid://dcs5hu6avrcbm" path="res://particlefx/main_menu_bubble.tres" id="6_2uujc"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="6_f6w3r"]
+[ext_resource type="PackedScene" uid="uid://dyr2nfmaogq61" path="res://scenes/options.tscn" id="9_438pf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1csb5"]
 
@@ -40,26 +33,6 @@ scale_max = 5.5
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ttn1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nxr84"]
-
-[sub_resource type="Curve" id="Curve_3wpt7"]
-max_value = 2.0
-_data = [Vector2(0, 1.46354), 0.0, 0.0, 0, 0, Vector2(1, 0.702374), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_sfbii"]
-curve = SubResource("Curve_3wpt7")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aowsy"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(600, 1, 1)
-direction = Vector3(0, 1, 0)
-initial_velocity_min = -100.0
-initial_velocity_max = -60.0
-gravity = Vector3(0, -15, 0)
-scale_max = 2.0
-scale_curve = SubResource("CurveTexture_sfbii")
-turbulence_noise_scale = 21.28
 
 [sub_resource type="Environment" id="Environment_qf1y2"]
 background_mode = 3
@@ -87,6 +60,7 @@ grow_vertical = 2
 texture = ExtResource("2_a2w6l")
 
 [node name="Reef1" type="Sprite2D" parent="."]
+modulate = Color(0.6, 0.6, 0.6, 1)
 position = Vector2(294, 384)
 scale = Vector2(2.1, 2.1)
 texture = ExtResource("5_7gltl")
@@ -94,11 +68,12 @@ texture = ExtResource("5_7gltl")
 [node name="FishSpawner" type="GPUParticles2D" parent="."]
 position = Vector2(1, 301)
 amount = 10
-process_material = SubResource("ParticleProcessMaterial_xvl8g")
+process_material = ExtResource("4_84sei")
 texture = ExtResource("3_0agft")
 lifetime = 8.0
 
 [node name="Reef2" type="Sprite2D" parent="."]
+modulate = Color(0.8, 0.8, 0.8, 1)
 position = Vector2(900, 406)
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("5_7gltl")
@@ -130,7 +105,7 @@ anchor_bottom = 0.5
 offset_left = -150.0
 offset_top = -74.0
 offset_right = 150.0
-offset_bottom = 176.0
+offset_bottom = 196.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -152,6 +127,28 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_mu6fg")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_c5868")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3ttn1")
 text = "Start"
+script = ExtResource("6_f6w3r")
+
+[node name="OptionButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
+theme_override_colors/font_hover_color = Color(0.246609, 0.468349, 1, 1)
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1csb5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_f76e5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_308nq")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_j3mx6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_f6vkl")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_poeua")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q47xt")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ka35n")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mu6fg")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_c5868")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3ttn1")
+text = "Options
+"
+script = ExtResource("6_f6w3r")
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -171,12 +168,13 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_mu6fg")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_c5868")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nxr84")
 text = "Quit"
+script = ExtResource("6_f6w3r")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(1, 1, 1, 0.588235)
 position = Vector2(574, 646)
 amount = 40
-process_material = SubResource("ParticleProcessMaterial_aowsy")
+process_material = ExtResource("6_2uujc")
 texture = ExtResource("3_vnf8f")
 lifetime = 10.0
 
@@ -186,7 +184,8 @@ autostart = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qf1y2")
 
-[node name="Label" type="Label" parent="."]
+[node name="Credit" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -196,10 +195,11 @@ offset_top = -73.0
 offset_right = 228.0
 offset_bottom = -19.0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = "A product by Ctrl + Alt + Win
 Nguyen Vo Han Phong
 Ho Thuan Khang"
+vertical_alignment = 1
 
 [node name="Score" type="Label" parent="."]
 unique_name_in_owner = true
@@ -218,6 +218,48 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 48
 text = "HIGHSCORE: X"
 
+[node name="Options" parent="." instance=ExtResource("9_438pf")]
+visible = false
+layout_mode = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -213.0
+offset_top = -110.0
+offset_right = -50.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.870588, 0.294118, 0.392157, 1)
+theme_override_colors/font_hover_color = Color(0.246609, 0.468349, 1, 1)
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1csb5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_f76e5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_308nq")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_j3mx6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_f6vkl")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_poeua")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q47xt")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ka35n")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mu6fg")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_c5868")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3ttn1")
+text = "Back"
+script = ExtResource("6_f6w3r")
+
+[node name="BgTimer" type="Timer" parent="."]
+wait_time = 86.0
+autostart = true
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="timeout" from="BgTimer" to="." method="_on_bg_timer_timeout"]

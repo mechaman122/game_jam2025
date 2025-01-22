@@ -1,31 +1,28 @@
-[gd_scene load_steps=16 format=3 uid="uid://nyf2fdmu7ut6"]
+[gd_scene load_steps=17 format=3 uid="uid://cbtqktlly3hyc"]
 
-[ext_resource type="Script" path="res://characters/squid/squid.gd" id="2_fx6ai"]
-[ext_resource type="Texture2D" uid="uid://gruc0g0q3n0c" path="res://assets/squid/squid.png" id="2_h7ky8"]
-[ext_resource type="Shader" path="res://scripts/dissolve.gdshader" id="2_i4v67"]
-[ext_resource type="Texture2D" uid="uid://clt252gv1vtut" path="res://assets/bubbles/bubble_3.png" id="3_2iphp"]
-[ext_resource type="Material" uid="uid://b2tjvrkmuhx6j" path="res://particlefx/fish_bubble.tres" id="4_78obh"]
-[ext_resource type="PackedScene" uid="uid://yrgog843vjbw" path="res://scenes/health_bar.tscn" id="6_pls7f"]
+[ext_resource type="PackedScene" uid="uid://w7ig28k28j7a" path="res://characters/fish/fish.tscn" id="1_we6ip"]
+[ext_resource type="Script" path="res://characters/strong_fish/strong_fish.gd" id="2_m6fyh"]
+[ext_resource type="Shader" path="res://scripts/dissolve.gdshader" id="2_qi32r"]
+[ext_resource type="Texture2D" uid="uid://ysmsmebmjnj8" path="res://assets/strong_fish/strong_fish.png" id="3_qxn4l"]
+[ext_resource type="Texture2D" uid="uid://bbw33sb8gtr1v" path="res://assets/strong_fish/strong_fish5.png" id="4_41a84"]
+[ext_resource type="PackedScene" uid="uid://dgk4rmu0dsnwi" path="res://scenes/shield.tscn" id="4_s1jnn"]
+[ext_resource type="Texture2D" uid="uid://cpe2v5t3griic" path="res://assets/strong_fish/strong_fish4.png" id="5_347j6"]
+[ext_resource type="Texture2D" uid="uid://dd2agyk0iadx7" path="res://assets/strong_fish/strong_fish3.png" id="6_6kt32"]
+[ext_resource type="Texture2D" uid="uid://clke8xp6ogv08" path="res://assets/strong_fish/strong_fish2.png" id="7_i5dam"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_77xi0"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_um03u"]
 noise_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pk7i2"]
-noise = SubResource("FastNoiseLite_77xi0")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b2sud"]
+noise = SubResource("FastNoiseLite_um03u")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gr6oa"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7cap1"]
 resource_local_to_scene = true
-shader = ExtResource("2_i4v67")
+shader = ExtResource("2_qi32r")
 shader_parameter/dissolve_value = 1.0
-shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_pk7i2")
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_b2sud")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4b753"]
-size = Vector2(48.5, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_raipm"]
-size = Vector2(53, 28)
-
-[sub_resource type="Animation" id="Animation_u1cw8"]
+[sub_resource type="Animation" id="Animation_vx8qi"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -76,7 +73,7 @@ tracks/3/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_sk0v2"]
+[sub_resource type="Animation" id="Animation_he07v"]
 resource_name = "die"
 length = 0.6
 step = 0.05
@@ -131,7 +128,7 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_1s7qe"]
+[sub_resource type="Animation" id="Animation_wc10h"]
 resource_name = "hurt"
 length = 0.3
 step = 0.05
@@ -148,54 +145,25 @@ tracks/0/keys = {
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jflc8"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6q00q"]
 _data = {
-"RESET": SubResource("Animation_u1cw8"),
-"die": SubResource("Animation_sk0v2"),
-"hurt": SubResource("Animation_1s7qe")
+"RESET": SubResource("Animation_vx8qi"),
+"die": SubResource("Animation_he07v"),
+"hurt": SubResource("Animation_wc10h")
 }
 
-[node name="Squid" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 6
-script = ExtResource("2_fx6ai")
-health = 50
-speed = 0.3
+[node name="StrongFish" instance=ExtResource("1_we6ip")]
+script = ExtResource("2_m6fyh")
+health = 8
+speed = 0.8
+fish_img = Array[Texture2D]([ExtResource("3_qxn4l"), ExtResource("4_41a84"), ExtResource("5_347j6"), ExtResource("6_6kt32"), ExtResource("7_i5dam")])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_gr6oa")
-scale = Vector2(2, 2)
-texture = ExtResource("2_h7ky8")
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_7cap1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_4b753")
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-position = Vector2(0.5, 0)
-shape = SubResource("RectangleShape2D_raipm")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" parent="." index="3"]
 libraries = {
-"": SubResource("AnimationLibrary_jflc8")
+"": SubResource("AnimationLibrary_6q00q")
 }
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(1, 1, 1, 0.588235)
-show_behind_parent = true
-position = Vector2(-15, 0)
-emitting = false
-process_material = ExtResource("4_78obh")
-texture = ExtResource("3_2iphp")
-lifetime = 4.0
-
-[node name="HealthBar" parent="." instance=ExtResource("6_pls7f")]
-offset_left = -19.0
-offset_top = -22.0
-offset_right = 19.0
-offset_bottom = -18.0
+[node name="Shield" parent="." index="6" instance=ExtResource("4_s1jnn")]
